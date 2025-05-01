@@ -1,0 +1,14 @@
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.AssemblyInfoInputs.cache
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.AssemblyInfo.cs
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.csproj.CoreCompileInputs.cache
+C:\Users\Вера\Desktop\Client\Client\bin\Debug\net8.0\Client.exe
+C:\Users\Вера\Desktop\Client\Client\bin\Debug\net8.0\Client.deps.json
+C:\Users\Вера\Desktop\Client\Client\bin\Debug\net8.0\Client.runtimeconfig.json
+C:\Users\Вера\Desktop\Client\Client\bin\Debug\net8.0\Client.dll
+C:\Users\Вера\Desktop\Client\Client\bin\Debug\net8.0\Client.pdb
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.dll
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\refint\Client.dll
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.pdb
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\Client.genruntimeconfig.cache
+C:\Users\Вера\Desktop\Client\Client\obj\Debug\net8.0\ref\Client.dll
