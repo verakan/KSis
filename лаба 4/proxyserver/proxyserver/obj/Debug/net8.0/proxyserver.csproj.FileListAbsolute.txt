@@ -1,0 +1,14 @@
+C:\Users\Вера\Desktop\proxyserver\proxyserver\bin\Debug\net8.0\proxyserver.exe
+C:\Users\Вера\Desktop\proxyserver\proxyserver\bin\Debug\net8.0\proxyserver.deps.json
+C:\Users\Вера\Desktop\proxyserver\proxyserver\bin\Debug\net8.0\proxyserver.runtimeconfig.json
+C:\Users\Вера\Desktop\proxyserver\proxyserver\bin\Debug\net8.0\proxyserver.dll
+C:\Users\Вера\Desktop\proxyserver\proxyserver\bin\Debug\net8.0\proxyserver.pdb
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.AssemblyInfoInputs.cache
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.AssemblyInfo.cs
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.csproj.CoreCompileInputs.cache
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.dll
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\refint\proxyserver.dll
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.pdb
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\proxyserver.genruntimeconfig.cache
+C:\Users\Вера\Desktop\proxyserver\proxyserver\obj\Debug\net8.0\ref\proxyserver.dll
