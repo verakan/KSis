@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Удаленное файловое хранилище</title>
+  <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+<body>
+  <h1>Удаленное файловое хранилище</h1>
+
+  <!-- Загрузить файл (PUT) -->
+  <section>
+    <h2>Загрузить файл (PUT)</h2>
+    <form id="uploadForm">
+      <label for="filepath">Путь для файла (например, path/to/file.txt):</label><br>
+      <input type="text" id="filepath" name="filepath" required><br><br>
+      <label for="file">Выберите файл:</label><br>
+      <input type="file" id="file" name="file" required><br><br>
+      <button type="submit">Загрузить</button>
+    </form>
+    <div id="uploadOutput"></div>
+  </section>
+
+  <!-- Просмотр содержимого каталога (GET) -->
+  <section>
+    <h2>Просмотр содержимого каталога (GET)</h2>
+    <form id="listForm">
+      <label for="dirpath">Путь каталога (например, path/to):</label><br>
+      <input type="text" id="dirpath" name="dirpath"><br><br>
+      <button type="submit">Показать список</button>
+    </form>
+    <div id="listOutput"></div>
+  </section>
+
+  <!-- Получить информацию о файле (HEAD) -->
+  <section>
+    <h2>Получить информацию о файле (HEAD)</h2>
+    <form id="headForm">
+      <label for="headpath">Путь файла (например, path/to/file.txt):</label><br>
+      <input type="text" id="headpath" name="headpath" required><br><br>
+      <button type="submit">Получить информацию</button>
+    </form>
+    <div id="headOutput"></div>
+  </section>
+
+  <!-- Удалить файл/каталог (DELETE) -->
+  <section>
+    <h2>Удалить файл/каталог (DELETE)</h2>
+    <form id="deleteForm">
+      <label for="deletepath">Путь (например, path/to/file.txt или path/to):</label><br>
+      <input type="text" id="deletepath" name="deletepath" required><br><br>
+      <button type="submit">Удалить</button>
+    </form>
+    <div id="deleteOutput"></div>
+  </section>
+
+  <!-- Скачать файл (GET) -->
+  <section>
+    <h2>Скачать файл (GET)</h2>
+    <form id="downloadForm">
+      <label for="downloadpath">Путь файла (например, path/to/file.txt):</label><br>
+      <input type="text" id="downloadpath" name="downloadpath" required><br><br>
+      <button type="submit">Скачать</button>
+    </form>
+    <div id="downloadOutput"></div>
+  </section>
+
+  <script>
+    // Обработка формы загрузки файла (PUT)
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const filepath = document.getElementById('filepath').value;
+      const fileInput = document.getElementById('file');
+      const file = fileInput.files[0];
+      const uploadOutput = document.getElementById('uploadOutput');
+      if (!file) {
+          uploadOutput.innerHTML = "<p style='color:red;'>Пожалуйста, выберите файл</p>";
+          return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(event) {
+          const data = event.target.result;
+          fetch('/' + filepath, {
+              method: 'PUT',
+              body: data
+          }).then(response => {
+              if (response.ok) {
+                  if (response.status === 201) {
+                      uploadOutput.innerHTML = "<p style='color:green;'>Файл успешно загружен (создан новый файл).</p>";
+                  } else {
+                      uploadOutput.innerHTML = "<p style='color:green;'>Файл успешно обновлён.</p>";
+                  }
+              } else {
+                  uploadOutput.innerHTML = `<p style='color:red;'>Ошибка загрузки: статус ${response.status}</p>`;
+              }
+          }).catch(err => {
+              uploadOutput.innerHTML = `<p style='color:red;'>Ошибка: ${err}</p>`;
+          });
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // Обработка запроса списка файлов каталога (GET)
+    document.getElementById('listForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const dirpath = document.getElementById('dirpath').value;
+      const listOutput = document.getElementById('listOutput');
+      fetch('/' + dirpath)
+        .then(response => {
+          if (response.headers.get('Content-Type').includes('application/json')) {
+              return response.json();
+          } else {
+              return response.text();
+          }
+        })
+        .then(data => {
+          if (typeof data === 'string') {
+              listOutput.innerHTML = data;
+          } else {
+              let html = '<ul>';
+              data.forEach(function(item) {
+                  html += `<li>${item.name} (${item.type})</li>`;
+              });
+              html += '</ul>';
+              listOutput.innerHTML = html;
+          }
+        })
+        .catch(err => {
+          listOutput.innerHTML = `<p style='color:red;'>Ошибка: ${err}</p>`;
+        });
+    });
+
+    // Обработка запроса информации о файле (HEAD)
+    document.getElementById('headForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const headpath = document.getElementById('headpath').value;
+      const headOutput = document.getElementById('headOutput');
+      fetch('/' + headpath, {
+          method: 'HEAD'
+      })
+        .then(response => {
+          if (response.ok) {
+              const contentLength = response.headers.get('Content-Length');
+              const lastModified = response.headers.get('Last-Modified');
+              headOutput.innerHTML = `<p>Content-Length: ${contentLength}<br>Last-Modified: ${lastModified}</p>`;
+          } else {
+              headOutput.innerHTML = `<p style='color:red;'>Ошибка HEAD запроса: статус ${response.status}</p>`;
+          }
+        })
+        .catch(err => {
+          headOutput.innerHTML = `<p style='color:red;'>Ошибка: ${err}</p>`;
+        });
+    });
+
+    // Обработка запроса удаления файла/каталога (DELETE)
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const deletepath = document.getElementById('deletepath').value;
+      const deleteOutput = document.getElementById('deleteOutput');
+      fetch('/' + deletepath, {
+          method: 'DELETE'
+      })
+        .then(response => {
+          if (response.status === 204) {
+              deleteOutput.innerHTML = "<p style='color:green;'>Удаление прошло успешно.</p>";
+          } else {
+              deleteOutput.innerHTML = `<p style='color:red;'>Ошибка удаления: статус ${response.status}</p>`;
+          }
+        })
+        .catch(err => {
+          deleteOutput.innerHTML = `<p style='color:red;'>Ошибка: ${err}</p>`;
+        });
+    });
+
+    // Обработка запроса скачивания файла (GET)
+    document.getElementById('downloadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const downloadpath = document.getElementById('downloadpath').value;
+      // Перенаправляем браузер на новый эндпоинт для скачивания файла
+      window.location.href = '/download/' + downloadpath;
+    });
+  </script>
+</body>
+</html>
